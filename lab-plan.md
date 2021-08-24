@@ -6,7 +6,7 @@
 | 2 | [Introduction to the C Programming Language][2] | Pass/fail | Automatic | Individually | September 10 |
 | 3 | [Introduction to Go Programming][3] | Pass/fail | Automatic | Individually | September 17 |
 | 4 | [Scheduling][4] | Pass/fail | TA Approval | Individually | October 8 |
-| 5 | [Memory Management][5] | Pass/fail | Automatic | Group | October 22 |
+| 5 | [Memory Management][5] | Pass/fail | TA Approval | Group | October 22 |
 | 6 | [Concurrency and Parallelism][6] | Pass/fail | TA Approval | Group | November 5 |
 | 7 | [Introduction to Docker][7] | Pass/fail | TA Approval | Individually | November 12 |
 
