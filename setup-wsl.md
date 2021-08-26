@@ -60,6 +60,13 @@ After installing your Linux distribution of choice you can launch it as a regula
 Further we recommend installing and using the more feature rich [Windows Terminal](https://www.microsoft.com/en-us/p/windows-terminal/9n0dx20hk701) over the default terminal.
 We also provide a [Go installation guide](setup-go.md) and a some guidance related to [code editors](setup-editors.md).
 
+### Create a new user account for your Linux distribution
+
+When opening your newly installed Linux distribution you will be asked to create an account, you can choose a username of your convenience.
+You can also make it the [default user](https://docs.microsoft.com/en-us/windows/wsl/wsl-config#change-the-default-user-for-a-distribution) in wsl, so next time you login you will automatically login as that user.
+
+Please also take a look [here](https://ubuntu.com/tutorials/command-line-for-beginners#7-the-command-line-and-the-superuser) to understand the implications of running applications as root.
+
 ## Confirming WSL2 is being used
 
 To confirm that WSL2 is being used, run the following command in PowerShell:
