@@ -18,37 +18,21 @@ Here are two videos describing these steps: [Part 1 (~10 minutes)](https://youtu
    You will have write access to this repository.
    Your solution to the assignments should be pushed here.
 
-2. To get started, decide on a suitable location for your workspace for the course.
+2. First, you will need to set up SSH for GitHub authentication with password-less login.
+   We made a video [tutorial (19:34)](https://youtu.be/qik3HHZW6C0) describing the steps.
+
+3. Once ssh is configured, you need to decide on a suitable location for your workspace for the course.
    In this guide we will use `$HOME/dat320-2021` as the workspace.
    Do the following making sure to replace `username` with your GitHub user name:
-
-   Alternative 1 (preferred):
-   (These steps requires that you have already set up your GitHub user with SSH keys.)
 
    ```console
    mkdir $HOME/dat320-2021
    cd $HOME/dat320-2021
    git clone git@github.com:dat320-2021/username-labs assignments
    cd assignments
-   git remote add course-assignments git@github.com:dat320-2021/assignments
-   git pull course-assignments main
-   ```
-
-   Alternative 2:
-   (These steps will require that you type your GitHub password every time you access your GitHub repository.)
-
-   ```console
-   mkdir $HOME/dat320-2021
-   cd $HOME/dat320-2021
-   git clone https://github.com/dat320-2021/username-labs assignments
-   cd assignments
    git remote add course-assignments https://github.com/dat320-2021/assignments
    git pull course-assignments main
    ```
-
-3. You may be asked for username and password above.
-   In the first lab, you will learn how to set up SSH for GitHub authentication with password-less login, which can save you quite a bit of typing.
-   Here are some [steps](github-ssh.md) for doing this, but you may wait until first lab for more elaborate instructions.
 
 4. One of the most useful git commands is: `git status`.
    This will most often be able to tell you what you should be doing with your working copy.

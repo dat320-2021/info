@@ -97,10 +97,10 @@ Here are two short videos describing these steps: [Part 1](https://youtu.be/3KJm
    A Discord account is required to sign in to communicate with the teaching staff during lab hours.
    You can skip this step if you already have an account.
 
-2. *DISCORD SERVER IS NOW READY*
+2. *DISCORD SERVER NOT READY YET; WE WILL POST NEW DISCORD LINK WHEN THE SERVER IS READY.*
    To join our dat320-2021 Discord server, navigate [here](https://discord.gg/fYZwZHArud).
 
-3. Once connected to the server, please register with our bot, `@dat320-help-bot`, by sending it a direct message:
+3. Once connected to the server, please register with our bot, `@dat320-helpbot`, by sending it a direct message:
 
    ```text
    !register username
