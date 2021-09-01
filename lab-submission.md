@@ -30,7 +30,7 @@ Here are two videos describing these steps: [Part 1 (~10 minutes)](https://youtu
    cd $HOME/dat320-2021
    git clone git@github.com:dat320-2021/username-labs assignments
    cd assignments
-   git remote add course-assignments https://github.com/dat320-2021/assignments
+   git remote add course-assignments git@github.com:dat320-2021/assignments
    git pull course-assignments main
    ```
 
