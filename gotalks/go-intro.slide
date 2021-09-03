@@ -1,0 +1,716 @@
+Introduction to Go Programming
+
+Hein Meling
+University of Stavanger
+
+Slides inspired by
+Robert Griesemer, Sameer Ajmani, David Crawshaw, and Francesc Campoy,
+Go team, Google
+
+* The Go programming language
+
+- Modern
+- OO support but not type-oriented
+- Strong support for concurrency
+- Compact, concise, general-purpose
+- Imperative, statically type-checked, dynamically type-safe
+- Garbage-collected
+- Compiles to native code, statically linked
+- Fast compilation, efficient execution
+
+Designed by programmers for programmers!
+
+.link http://golang.org golang.org
+
+
+# * What is Go?
+
+# "Go is an open source programming language that makes it easy to build simple, reliable, and efficient software."
+
+* History
+
+Design began in late 2007.
+
+- Robert Griesemer, Rob Pike, and Ken Thompson.
+- Ian Lance Taylor and Russ Cox.
+
+Open source since 2009 with a very active community.
+
+Language stable as of Go 1, early 2012.
+
+* Update, September 2021:
+
+Go v1.17 just released
+
+Still compatible with Go 1
+
+New way to pass function arguments and results 
+
+- 5 % performance improvement and 2 % smaller binaries on amd64
+
+Many other improvements
+
+* Comparing Go and Java 
+
+* Go and Java have much in common
+
+- C family (imperative, braces)
+- Statically typed
+- Garbage collected
+- Memory safe (nil references, runtime bounds checks)
+- Variables are always initialized (zero/nil/false)
+- Methods
+- Interfaces
+- Type assertions (`instanceof`)
+- Reflection
+
+* Go differs from Java in several ways
+
+- Programs compile to machine code.  There's no VM.
+- Statically linked binaries
+- Control over memory layout
+- Function values and lexical closures
+- Built-in strings (UTF-8)
+- Built-in generic maps and arrays/slices
+- Built-in concurrency
+
+* Go intentionally leaves out many features
+
+- No classes
+- No constructors
+- No inheritance
+- No `final`
+- No exceptions
+- No annotations
+- (No user-defined generics); probably coming in Go 1.18
+
+* Why does Go leave out those features?
+
+Clarity is critical.
+
+When reading code, it should be clear what the program will do.
+
+When writing code, it should be clear how to make the program do what you want.
+
+Sometimes this means writing out a loop instead of invoking an obscure function.
+
+- Go has 25 keywords vs Java's 51 keywords
+- C# has 100 keywords
+
+For more background on design:
+
+- [[http://commandcenter.blogspot.com/2012/06/less-is-exponentially-more.html][Less is exponentially more (Pike, 2012)]]
+- [[http://talks.golang.org/2012/splash.article][Go at Google: Language Design in the Service of Software Engineering (Pike, 2012)]]
+
+* Go runtime and OS interaction
+
+.image figs/go-arch.png
+
+* Examples
+
+* Go looks familiar to Java programmers
+
+Main.java
+
+.code hello/Main.java
+
+hello.go
+
+.play hello/hello.go
+
+* Hello, web server
+
+.play hello/server.go
+
+Types follow names in declarations.
+Exported names are Capitalized.  Unexported names are not.
+
+
+* All types are created equal
+
+
+* Go types
+
+- primitive types
+
+  int, uint, int8, uint8, ...
+  bool, string
+  float32, float64
+  complex64, complex128
+
+- structs
+
+  type Person struct {
+    Name string
+    Age  int
+  }
+
+* Kinds of types (continued)
+
+- pointers
+
+  *int, *Person
+
+- functions
+
+  func(int, int) int
+
+- channels
+
+  chan bool
+
+- interfaces
+
+  interface {
+    Start()
+    Stop()
+  }
+
+* Slices
+
+	[]T  // slice of T
+
+- Descriptor for an underlying array segment
+- May grow and shrink
+- Has length and capacity
+- Assigning a slice copies the descriptor, not the underlying array
+
+Common slice operations:
+
+	len(s)
+	s[i]
+	s[i:j]
+	append(s, x)  // append element x to slice s and return new slice
+
+- Slices play the role of dynamically sized arrays
+- Widely used in Go code
+
+
+* Maps
+
+	map[K]V  // map K -> V
+
+- Map is a language-supplied hash table
+- Maps values of key type K to values of type V
+- Assigning a map copies the map reference, not the map contents
+
+Common map operations:
+
+	make(map[K]V)
+	len(m)
+	m[k]
+	delete(m, k)
+
+Example:
+
+  var m = make(map[string]int)
+  m["dat320"] = 2020
+
+* Maps
+
+- Map iteration order is not specified:
+
+	for key, value := range m {
+		// order of key sequence different each time
+	}
+
+
+* Type declarations
+
+  type [name] [specification]
+
+`Person` is a `struct` type.
+
+  type Person struct {
+    name string
+    age  int
+  }
+
+`Celsius` is a `float64` type.
+
+  type Celsius float64
+
+* Function declarations
+
+  func [name] ([params]) [return value]
+  func [name] ([params]) ([return values])
+
+A sum function:
+
+  func sum(a int, b int) int {
+    return a + b
+  }
+
+Brevity is king:
+
+  func sum(a, b int) int {
+    return a + b
+  }
+
+* Function declarations II
+
+A function with multiple returned values:
+
+  func div(a, b int) (int, int) {
+    return a / b, a % b
+  }
+
+Made clearer by naming the return values:
+
+  func div(den, div int) (q, rem int) {
+    return den / div, den % div
+  }
+
+* Method declarations
+
+  func ([receiver]) [name] ([param]*) ([return]*)
+
+A method on a struct:
+
+  func (p Person) Major() bool {
+    return p.age >= 18
+  }
+
+But also a method on a `float64`:
+
+  func (c Celsius) Freezing() bool {
+    return c <= 0
+  }
+
+_Constraint:_ Methods can *only* be defined on types declared in the same package.
+
+  // This won't compile
+  func (s string) Length() int { return len(s) }
+
+
+* Methods
+
+Methods are functions with a _receiver_ parameter:
+
+.code taste/point.go /String START/,/String END/
+
+The receiver binds the method to its _base_type_ (Point):
+
+.code taste/point.go /Point START/,/Point END/
+
+Methods are invoked via the usual dot notation:
+
+.play taste/point.go /main START/,/main END/
+
+
+* Methods can be defined for any user-defined type!
+
+For the Weekday type:
+
+.code taste/weekday.go /type START/,/type END/
+
+Define String method on Weekday:
+
+.code taste/weekday.go /String START/,/String END/
+
+.play taste/weekday.go /main START/,/main END/
+
+Method calls via non-interface types are statically dispatched.
+
+
+* Wait, pointers?
+
+Use `&` to obtain the address of a variable.
+
+  a := "hello"
+  p := &a
+
+Use `*` to dereference the pointer.
+
+  fmt.Print(*p + ", world")
+
+No pointer arithmetic, no pointers to unsafe memory.
+
+  a := "hello"
+  p := &a
+
+  p += 4  // no, you can't
+
+* Why pointers?
+
+Control what you pass to functions.
+
+- passing values, no side-effects:
+
+  func double(x int) {
+    x *= 2
+  }
+
+- passing pointers: side-effects possible:
+
+  func double(x *int) {
+    *x *= 2
+  }
+
+
+* Method declarations on pointers
+
+Pointers allow modifying the pointed receiver:
+
+  func (p *Person) IncAge() {
+    p.age++
+  }
+
+The method receiver is a copy of a pointer (pointing to the same address).
+
+Function declarations are equal to method declarations
+
+- Receivers behave like any other argument
+- The following has identical behavior
+
+  func IncAge(p *Person) {
+    p.age++
+  }
+
+* Method declarations on non-pointers
+
+This will not update the Person object:
+
+  func (p Person) IncAge() {
+    p.age++
+  }
+
+
+* Method calls on nil receivers are perfectly valid (and useful!).
+
+  func (p *Person) Name() string {
+    if p == nil {
+      return "anonymous"
+    }
+    return p.name
+  }
+
+* Interfaces
+
+* Interfaces
+
+An interface is a set of methods.
+
+In Java:
+
+  interface Switch {
+    void open();
+    void close();
+  }
+
+In Go:
+
+  type OpenCloser interface {
+    Open()
+    Close()
+  }
+
+* It's all about satisfaction
+
+Java interfaces are satisfied *explicitly*.
+
+Go interfaces are satisfied *implicitly*.
+
+.image //upload.wikimedia.org/wikipedia/commons/thumb/2/29/Rolling_Stones_09.jpg/512px-Rolling_Stones_09.jpg _ 512
+
+Picture by Gorupdebesanez [[http://creativecommons.org/licenses/by-sa/3.0][CC-BY-SA-3.0]], via [[http://commons.wikimedia.org/wiki/File%3ARolling_Stones_09.jpg][Wikimedia Commons]]
+
+* Go: implicit satisfaction
+
+_If_a_type_defines_all_the_methods_of_an_interface,_the_type_satisfies_that_interface._
+
+Benefits:
+
+- fewer dependencies
+- no type hierarchy
+- organic composition
+
+
+* Interface types
+
+- Abstract
+- Define (possibly empty) set of method signatures
+- Values of _any_type_ that implement all methods of an interface can be assigned to a variable of that interface.
+
+Examples:
+
+  interface{}  // empty interface
+
+  type Stringer interface {
+    String() string
+  }
+
+  type Interface interface {
+    Len() int
+    Swap(i, j int)
+    Less(i, j int) bool
+  }
+
+
+* Using interfaces
+
+.code taste/stringer.go /Stringer START/,/Stringer END/
+
+Both Weekday and Point define a String method, so values of both can be assigned to
+a variable of Stringer type:
+
+.play taste/stringer.go /main START/,/main END/
+
+Method calls via interface types are dynamically dispatched ("virtual function call").
+
+
+* Sorting
+
+sort.Sort operates on any type that implements the sort.Interface:
+
+  type Interface interface {
+    Len() int
+    Swap(i, j int)
+    Less(i, j int) bool
+  }
+
+For instance, to sort a slice of strings lexically, define:
+
+.code taste/sort.go /lexical START/,/lexical END/
+
+And sort:
+
+  sort.Sort(lexical(s))  // where s is a []string slice
+
+
+* Packages
+
+* Go programs are made up of packages
+
+All Go source is part of a package.
+Every file begins with a package statement.
+Programs start in package main.
+
+.play hello/hello.go
+
+For very small programs, `main` is the only package you need to write.
+
+The hello world program _imports_ package `fmt`.
+
+The function `Println` is defined in the fmt package.
+
+* An example package: fmt
+
+	// Package fmt implements formatted I/O.
+	package fmt
+
+	// Println formats using the default formats for its
+	// operands and writes to standard output.
+	func Println(a ...interface{}) (n int, err error) {
+		...
+	}
+
+	func newPrinter() *pp {
+		...
+	}
+
+The `Println` function is _exported_. It starts with an upper case
+letter, which means other packages are allowed to call it.
+
+The `newPrinter` function is _unexported_. It starts with a lower
+case letter, so it can only be used inside the fmt package.
+
+* The shape of a package
+
+Packages collect related code.
+
+They can be big or small,
+and may be spread across multiple files.
+
+All the files in a package live in a single directory.
+
+The `net/http` package exports more than 100 names. (18 files)
+The `errors` package exports just one. (1 file)
+
+* The name of a package
+
+Keep package names short and meaningful.
+Don't use underscores, they make package names long.
+
+- `io/ioutil` not `io/util`
+- `suffixarray` not `suffix_array`
+
+Don't overgeneralize. A `util` package could be anything.
+
+The name of a package is part of its type and function names.
+On its own, type `Buffer` is ambiguous. But users see:
+
+	buf := new(bytes.Buffer)
+
+Choose package names carefully.
+
+Choose good names for users.
+
+
+* Package layout
+
+.code figs/tree.txt
+
+
+* Modules
+
+.image figs/packages-and-modules.png
+
+
+* Modules: go.mod
+
+.code go.mod
+
+
+* The testing a package
+
+Tests are distinguished by file name. Test files end in `_test.go`.
+
+.play fmt/fmt_test.go /TestSprintf START/,/TestSprintf END/
+
+
+* Naming
+
+* Names matter
+
+Programs are full of names. Names have costs and benefits.
+
+*Costs*: *space* *and* *time*
+Names need to be in short term memory when reading code.
+You can only fit so many. Longer names take up more space.
+
+*Benefits:* *information*
+A good name is not only a referent, it conveys information.
+
+Use the shortest name that carries the right amount of information in its context.
+
+Devote time to naming.
+
+* Name style
+
+Use `camelCase`, `not_underscores`.
+Local variable names should be short, typically one or two characters.
+
+Package names are usually one lowercase word.
+
+Global variables should have longer names.
+
+Don't stutter.
+
+- `bytes.Buffer` not `bytes.ByteBuffer`
+- `zip.Reader` not `zip.ZipReader`
+- `errors.New` not `errors.NewError`
+- `r` not `bytesReader`
+- `i` not `loopIterator`
+
+* Doc comments
+
+Doc comments precede the declaration of an exported identifier:
+
+        // Join concatenates the elements of elem to create a single string.
+        // The separator string sep is placed between elements in the resulting string.
+        func Join(elem []string, sep string) string {
+
+The godoc tool extracts such comments and presents them on the web:
+
+.image figs/godoc.png
+
+* Writing doc comments
+
+Doc comments should be English sentences and paragraphs.
+They use no special formatting beyond indentation for preformatted text.
+
+Doc comments should begin with the noun they describe.
+
+	// Join concatenates… 		good
+	// This function… 			bad
+
+Package docs go above the package declaration:
+
+	// Package fmt…
+	package fmt
+
+
+* Go has great tools
+
+
+* The go tool
+
+The go tool builds Go programs from source in a conventional directory layout.
+
+Fetch the `present` tool and its dependencies, build it, and install it:
+
+  % go install golang.org/x/tools/cmd/present@latest
+
+Run it:
+
+  % present
+
+
+* Building and running Go programs
+
+You can run Go programs directly:
+
+  % go run hello.go
+
+To build and binary executable in package `hello`:
+
+  % go build ./hello
+  % ls -la
+
+To install a binary:
+
+  % go install ./hello
+  % which hello
+
+
+* gofmt and goimports
+
+Gofmt formats code automatically.  No options.
+
+Goimports updates import statements based on your workspace.
+
+Most people run these tools on save.
+
+.link http://play.golang.org/p/GPqra77cBK
+
+
+* pkg.go.dev
+
+Generated documentation for the world's open-source Go code:
+
+.link https://pkg.go.dev
+
+- go doc fmt
+- go doc fmt Errorf
+
+
+* IDE and editor support
+
+GoLand (IntelliJ IDEA by Jetbrains), Visual Studio Code, vim, emacs, many others.
+
+- `gofmt`
+- `goimports`
+- `go` `doc` lookups
+- code completion
+- code navigation
+- GoLand has better refactoring support
+
+
+* Where to Go next
+
+Take the Go Tour online.
+
+.link http://tour.golang.org
+
+Practical Go Lessons
+
+.link https://www.practical-go-lessons.com/
+
+Lots more material.
+
+.link http://golang.org/wiki/Learn
+
+Great community.
+
+.link http://golang.org/project

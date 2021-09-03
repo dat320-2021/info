@@ -1,0 +1,24 @@
+% tree
+.
+├── go.mod
+├── go.sum
+├── lab3
+│   ├── README.md
+│   ├── cipher
+│   │   ├── rot13.go
+│   │   ├── rot13_test.go
+│   │   ├── scramble.go
+│   │   ├── scramble_split_func.go
+│   │   └── scramble_test.go
+│   ├── cmd
+│   │   └── terminal
+│   │       ├── hello.txt
+│   │       └── main.go
+│   ├── errors
+│   │   ├── errors.go
+│   │   ├── errors_defs.go
+│   │   └── errors_test.go
+│   └── sequence
+│       ├── triangular.go
+│       └── triangular_test.go
+└── troubleshooting.md

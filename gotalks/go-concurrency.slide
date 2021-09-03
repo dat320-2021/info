@@ -1,0 +1,174 @@
+Introduction to Concurrency with Go Programming
+
+Hein Meling
+University of Stavanger
+
+Slides inspired by
+Robert Griesemer
+Go team, Google
+
+TODO(meling): add datarace example
+
+
+* A larger example
+
+
+* Top 10 identifiers in std library
+
+.code taste/idents.go
+
+	$ cat $(find $GOROOT -name '*.go') | ./idents | sort | uniq -c | sort -nr | sed 10q
+
+
+* A variation: Histogram of Go statements
+
+A histogram is a map from statement name ("if", "for", etc.) to use count:
+
+.code taste/histo0.go /histogram START/,/histogram END/
+
+Algorithm:
+
+- Use walkStdLib to traverse all files of the std library
+- For each file, parse and create abstract syntax tree
+- Traverse syntax tree and add each statement to histogram
+- Print the result
+
+.code taste/histo0.go /main START/,/main END/
+
+
+* Processing a Go source file
+
+.code taste/histo0.go /add START/,/add END/
+
+
+* Printing the histogram
+
+.play taste/histo0.go /print START/,/print END/
+
+Note: Histogram (map) iteration order is not specified.
+
+* Sorting
+
+sort.Sort operates on any type that implements the sort.Interface:
+
+	interface {
+		Len() int
+		Swap(i, j int)
+		Less(i, j int) bool
+	}
+
+For instance, to sort a slice of strings lexically, define:
+
+.code taste/sort.go /lexical START/,/lexical END/
+
+And sort:
+
+	sort.Sort(lexical(s))  // where s is a []string slice
+
+
+* Sorting histogram entries
+
+.code taste/histo.go /byCount START/,/byCount END/
+
+
+* Improved histogram printing
+
+.play taste/histo.go /print START/,/print END/
+
+
+* Concurrency
+
+* Goroutines
+
+- The _go_ statement launches a function call as a goroutine
+	go f()
+	go f(x, y, ...)
+
+- A goroutine runs concurrently (but not necessarily in parallel)
+- A goroutine has its own stack
+
+
+* A simple example
+
+.code taste/concurrency1.go /f START/,/f END/
+
+Function f is launched as 3 different goroutines, all running concurrently:
+
+.play taste/concurrency1.go /main START/,/main END/
+
+
+* Communication via channels
+
+A channel type specifies a channel value type (and possibly a communication direction):
+
+	chan int
+	chan<- string  // send-only channel
+	<-chan T       // receive-only channel
+
+A channel is a variable of channel type:
+
+	var ch chan int
+	ch := make(chan int)  // declare and initialize with newly made channel
+
+A channel permits _sending_ and _receiving_ values:
+
+	ch <- 1   // send value 1 on channel ch
+	x = <-ch  // receive a value from channel ch (and assign to x)
+
+Channel operations synchronize the communicating goroutines.
+
+* Communicating goroutines
+
+Each goroutine sends its results via channel ch:
+
+.code taste/concurrency2.go /f START/,/f END/
+
+The main goroutine receives (and prints) all results from the same channel:
+
+.play taste/concurrency2.go /main START/,/main END/
+
+
+* Putting it all together
+
+
+* Analyze files concurrently, map-reduce style
+
+Mapper:
+
+.code taste/histop.go /mapper START/,/mapper END/
+
+Reducer:
+
+.code taste/histop.go /reducer START/,/reducer END/
+
+.code taste/histop.go /merge START/,/merge END/
+
+
+* From sequential program...
+
+.play taste/histo.go /main START/,/main END/
+
+
+* ... to concurrent program
+
+.play taste/histop.go /main START/,/main END/
+
+
+* There's a lot more!
+
+- Extensive standard library
+
+.link http://golang.org/pkg/
+
+- Powerful tools
+
+.link http://play.golang.org/p/Au02fFpYdf
+# playground, gofmt
+
+- Multi-platform support
+
+.link http://build.golang.org/
+
+- Great documentation
+
+.link http://tour.golang.org/#1

@@ -13,8 +13,6 @@ ch26/t1
 ch27/twait
 ch33/select
 ch39/readdir
-gotalk
-lecture-plan-with-video-links.md
 
 # Test binary, build with `go test -c`
 *.test
