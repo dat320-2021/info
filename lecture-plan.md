@@ -36,22 +36,18 @@ You may also be interested in this [YouTube playlist](https://www.youtube.com/pl
 | 40 |       | Wed | 28 | [Locks][36], [Part 2][37]                                                            |
 | 40 |       | Wed | 29 | [Lock-based Concurrent Data Structures][38], [Part 2][39], [Part 3][40]              |
 | 40 | 07.10 | Thu | 30 | [Condition Variables][41], [Part 2][42]                                              |
-| 41 | 13.10 | Wed |    | Fall break -- no lectures planned (may change if U.S. travel still not possible)     |
-| 41 | 14.10 | Thu |    |                                                                                      |
-| 42 | 20.10 | Wed | 31 | [Semaphores][43], [Part 2][44], [Part 3][45]                                         |
-| 42 |       | Wed | 32 | [Common Concurrency Problems][46], [Part 2][47]                                      |
-| 42 | 21.10 | Thu |    | [Network Programming with gRPC in Go][51], Parts: [2][52], [3][53], [4][54], [5][55] |
-| 43 | 27.10 | Wed | 10 | [Multiprocessor Scheduling][48]                                                      |
-| 43 |       | Wed | 39 | [Files and Directories][49], [Part 2][50]                                            |
-| 43 | 28.10 | Thu | 40 | [File System Implementation][56], [Part 2][57]                                       |
-| 44 | 03.11 | Wed | 48 | [Distributed Systems][58]                                                            |
-| 44 |       | Wed | 48 | [Live Coding: TCP Echo Client/Server in Go][59], [Part 2][60]                        |
-| 44 |       | Wed | 49 | [Sun's Network File System][61] [Part 2][62] [Part 3][63]                            |
-| 44 | 04.11 | Thu |    |                                                                                      |
-| 45 | 10.11 | Wed |    |                                                                                      |
-| 45 | 11.11 | Thu |    |                                                                                      |
-| 46 | 17.11 | Wed |    |                                                                                      |
-| 46 | 18.11 | Thu |    |                                                                                      |
+| 41 | 13.10 | Wed | 31 | [Semaphores][43], [Part 2][44], [Part 3][45]                                         |
+| 41 | 14.10 | Thu | 32 | [Common Concurrency Problems][46], [Part 2][47]                                      |
+| 42 | 20.10 | Wed | 10 | [Multiprocessor Scheduling][48]                                                      |
+
+| Ch | Topics to watch on your own                                                          |
+|----|--------------------------------------------------------------------------------------|
+|    | [Network Programming with gRPC in Go][51], Parts: [2][52], [3][53], [4][54], [5][55] |
+| 39 | [Files and Directories][49], [Part 2][50]                                            |
+| 40 | [File System Implementation][56], [Part 2][57]                                       |
+| 48 | [Distributed Systems][58]                                                            |
+| 48 | [Live Coding: TCP Echo Client/Server in Go][59], [Part 2][60]                        |
+| 49 | [Sun's Network File System][61] [Part 2][62] [Part 3][63]                            |
 
 [1]: https://youtu.be/oORmvjot6wc
 [2]: https://youtu.be/UVpbQnaagYE

@@ -4,15 +4,15 @@
 *.dll
 *.so
 *.dylib
-ch05/p4.output
-ch13/va
-ch14/strcpy
-ch15/func.o
-ch26/t0
-ch26/t1
-ch27/twait
-ch33/select
-ch39/readdir
+chapters/ch05/p4.output
+chapters/ch13/va
+chapters/ch14/strcpy
+chapters/ch15/func.o
+chapters/ch26/t0
+chapters/ch26/t1
+chapters/ch27/twait
+chapters/ch33/select
+chapters/ch39/readdir
 
 # Test binary, build with `go test -c`
 *.test
