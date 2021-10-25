@@ -1,0 +1,24 @@
+goos: darwin
+goarch: amd64
+pkg: info/go/counter
+cpu: Intel(R) Core(TM) i9-8950HK CPU @ 2.90GHz
+BenchmarkNoLockCounter
+BenchmarkNoLockCounter                 	     147	   7685384 ns/op
+BenchmarkNoLockCounter-2               	     156	   7580889 ns/op
+BenchmarkNoLockCounter-4               	     158	   7578859 ns/op
+BenchmarkNoLockCounter-6               	     159	   7587284 ns/op
+BenchmarkNoLockCounter-12              	     159	   7975167 ns/op
+BenchmarkConcurrentNoLockCounter
+BenchmarkConcurrentNoLockCounter       	     150	   7958762 ns/op
+BenchmarkConcurrentNoLockCounter-2     	     208	   5290011 ns/op
+BenchmarkConcurrentNoLockCounter-4     	     320	   3728463 ns/op
+BenchmarkConcurrentNoLockCounter-6     	     320	   3210353 ns/op
+BenchmarkConcurrentNoLockCounter-12    	     366	   3783770 ns/op
+BenchmarkConcurrentCounter
+BenchmarkConcurrentCounter             	      15	  69675917 ns/op
+BenchmarkConcurrentCounter-2           	       7	 163816885 ns/op
+BenchmarkConcurrentCounter-4           	       4	 277384628 ns/op
+BenchmarkConcurrentCounter-6           	       4	 285225682 ns/op
+BenchmarkConcurrentCounter-12          	       4	 298045957 ns/op
+PASS
+ok  	info/go/counter	28.223s
