@@ -8,8 +8,8 @@ chapters/ch05/p4.output
 chapters/ch13/va
 chapters/ch14/strcpy
 chapters/ch15/func.o
-chapters/ch26/t0
-chapters/ch26/t1
+go/t0/t0
+go/t1/t1
 chapters/ch27/twait
 chapters/ch33/select
 chapters/ch39/readdir
@@ -22,5 +22,3 @@ chapters/ch39/readdir
 
 # VSCode directory
 .vscode
-go/t1/t1
-go/t0/t0
