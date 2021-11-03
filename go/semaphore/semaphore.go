@@ -1,10 +1,27 @@
 package semaphore
 
-// Semaphore is a dummy skeleton for the code examples only.
 type Semaphore struct {
-	Value int
+	semChan chan struct{}
 }
 
-func (s *Semaphore) Wait() {}
+func New(n int) *Semaphore {
+	return &Semaphore{
+		semChan: make(chan struct{}, n),
+	}
+}
 
-func (s *Semaphore) Post() {}
+func (s *Semaphore) Acquire() {
+	s.semChan <- struct{}{}
+}
+
+func (s *Semaphore) Release() {
+	<-s.semChan
+}
+
+func (s *Semaphore) Wait() {
+	s.semChan <- struct{}{}
+}
+
+func (s *Semaphore) Post() {
+	<-s.semChan
+}
