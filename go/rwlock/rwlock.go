@@ -10,8 +10,8 @@ type RWLock struct {
 
 func New() *RWLock {
 	return &RWLock{
-		lock:      semaphore.Semaphore{Value: 1},
-		writeLock: semaphore.Semaphore{Value: 1},
+		lock:      *semaphore.New(1),
+		writeLock: *semaphore.New(1),
 	}
 }
 

@@ -14,9 +14,9 @@ var (
 	buffer    [MAX]int
 	fillIndex int
 	useIndex  int
-	mutex     = semaphore.Semaphore{Value: 1} // binary semaphore == a lock
-	empty     = semaphore.Semaphore{Value: MAX}
-	full      = semaphore.Semaphore{Value: 0}
+	mutex     = semaphore.New(1) // binary semaphore == a mutex lock
+	empty     = semaphore.New(MAX)
+	full      = semaphore.New(0)
 )
 
 func put(val int) {
