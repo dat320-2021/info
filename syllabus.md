@@ -1,12 +1,12 @@
-# Tentative Syllabus
+# Final Syllabus
 
 The course is based on this [textbook](http://pages.cs.wisc.edu/~remzi/OSTEP/):
 Operating Systems: Three Easy Pieces. Version 1.00.
 Remzi H. Arpaci-Dusseau and Andrea C. Arpaci-Dusseau
 
-Syllabus include Chapters 2-40 and 48-49 from the textbook, excluding the dialogue chapters and Chapter 38.
+Syllabus include Chapters 2-32, excluding the dialogue chapters.
 
-Chapters 36 and 37 are defined as *read on your own* and will *not* be subject to examination, but may be helpful to understand Chapters 39 and 40.
+Chapters 33-49 are defined as *read on your own* and will *not* be subject to examination.
 
 ## Excluded Subchapters
 
